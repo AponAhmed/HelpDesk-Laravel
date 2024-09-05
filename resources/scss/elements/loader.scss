@@ -1,0 +1,421 @@
+:root {
+    --qt-loadingcolor-secondary: 61, 107, 245;
+}
+
+
+.load {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+/* qtload001 */
+.load01>div {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    border: 4px solid;
+    border-top-color: transparent;
+    border-right-color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    animation: qt-loadanim001 1s infinite linear;
+}
+
+/* qtload002 */
+.load02>div {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    border: 4px solid;
+    border-top-color: rgb(var(--qt-loadingcolor-secondary));
+    border-right-color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    animation: qt-loadanim001 1s infinite linear;
+}
+
+/* qtload003 */
+.load03>div {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    border: 4px solid;
+    border-top-color: #fff;
+    border-right-color: var(--primary-color);
+    border-bottom-color: #fff;
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    animation: qt-loadanim001 1s infinite linear;
+}
+
+/* qtload004 */
+.load04 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.load04>div {
+    position: relative;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0;
+    animation: qt-loadanim003 2s infinite linear;
+}
+
+.load04>div:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.load04>div:nth-child(3) {
+    animation-delay: 1s;
+}
+
+/* qtload005 */
+.load05 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.load05>div {
+    position: relative;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    animation: qt-loadanim005 2s infinite linear;
+}
+
+.load05>div:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.load05>div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* qtload006 */
+.load06 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.load06>div {
+    position: relative;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    animation: qt-loadanim006 2s infinite steps(1, end);
+}
+
+.load06>div:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.load06>div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* qtload007 */
+.load07 {
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.load07>div {
+    position: relative;
+    width: 0.3em;
+    height: 1.6em;
+    border-radius: 0.15em;
+    background-color: var(--primary-color);
+    animation: qt-loadanim005 2s infinite linear;
+}
+
+.load07>div:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.load07>div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* qtload008 */
+.load08 {
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.load08>div {
+    position: relative;
+    width: 0.3em;
+    height: 1.6em;
+    border-radius: 0.15em;
+    background-color: var(--primary-color);
+    animation: qt-loadanim007 2s infinite linear;
+}
+
+.load08>div:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.load08>div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* qtload009 */
+.load09 {
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.load09>div {
+    position: relative;
+    width: 0.3em;
+    height: 1.6em;
+    border-radius: 0.15em;
+    background-color: var(--primary-color);
+    animation: qt-loadanim006 2s infinite steps(1, end);
+}
+
+.load09>div:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.load09>div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* qtload010 */
+.load10>div:nth-child(1) {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0;
+    animation: qt-loadanim004 2s infinite ease-out;
+}
+
+.load10>div:nth-child(2) {
+    position: absolute;
+    width: 3em;
+    height: 3em;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0;
+    animation: qt-loadanim004 2s infinite ease-out;
+    animation-delay: 1s;
+}
+
+/* qtload011 */
+.load11 {
+    width: 2em;
+    height: 2em;
+    background-color: rgba(var(--primary-color), 0.1);
+}
+
+.load11>div {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    background-color: var(--primary-color);
+    animation: qt-loadanim002 2s infinite linear;
+}
+
+/* qtload012 */
+.load12>div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    animation: qt-loadanim008 2s infinite ease;
+}
+
+.load12>div>div {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    animation: qt-loadanim009 2s infinite ease;
+}
+
+@keyframes qt-loadanim001 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes qt-loadanim002 {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    15% {
+        transform: translate(1em, 0) rotate(90deg);
+    }
+
+    25% {
+        transform: translate(1em, 0) rotate(90deg);
+    }
+
+    40% {
+        transform: translate(1em, 1em) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(1em, 1em) rotate(90deg);
+    }
+
+    65% {
+        transform: translate(0, 1em) rotate(0deg);
+    }
+
+    75% {
+        transform: translate(0, 1em) rotate(0deg);
+    }
+
+    90% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+@keyframes qt-loadanim003 {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes qt-loadanim004 {
+    0% {
+        transform: scale(0%, 0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(100%, 100%);
+        opacity: 0;
+    }
+}
+
+@keyframes qt-loadanim005 {
+    0% {
+        transform: translateY(0%);
+    }
+
+    20% {
+        transform: translateY(-50%);
+    }
+
+    40% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes qt-loadanim006 {
+    0% {
+        background-color: var(--primary-color);
+    }
+
+    20% {
+        background-color: rgb(var(--qt-loadingcolor-secondary));
+    }
+
+    40% {
+        background-color: var(--primary-color);
+    }
+}
+
+@keyframes qt-loadanim007 {
+    0% {
+        transform: scaleY(100%);
+    }
+
+    20% {
+        transform: scaleY(200%);
+    }
+
+    40% {
+        transform: scaleY(100%);
+    }
+}
+
+@keyframes qt-loadanim008 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(180deg);
+    }
+
+    50% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes qt-loadanim009 {
+    0% {
+        transform: scale(0%);
+    }
+
+    25% {
+        transform: scale(100%);
+    }
+
+    50% {
+        transform: scale(0%);
+    }
+
+    100% {
+        transform: scale(0%);
+    }
+}
+
+/*Customize*/
+.btn .load,
+.btn .load>div {
+    width: 1.5rem;
+    height: 1.5rem;
+}

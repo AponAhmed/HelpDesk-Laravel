@@ -1,0 +1,173 @@
+// Variables
+@import "variables";
+
+
+:root {
+    --primary-collor: #3488d2;
+    --sidebag-bg: #1a1f30;
+    --list-bg: #f6f6f6;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.hdesk-wrap {
+    width: 100%;
+    height: 100%;
+    // background-image: url('../images/bg/colors.jpg');
+    position: absolute;
+}
+
+.form-wrap {
+    padding: 25px;
+}
+
+.input-wrap {
+    margin-bottom: 5px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    background: rgba(255, 255, 255, .2);
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 3px;
+}
+
+.form-label {
+    font-size: 12px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+/*Button Css */
+.btn {
+    background-color: #f6f6f6;
+    padding: 5px 15px;
+    line-height: 1;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    border-radius: 20px;
+}
+
+.btn.btn-primary {
+    color: #ffff;
+    background: var(--primary-collor);
+}
+
+.btn.btn-radius {
+    border-radius: 30px;
+}
+
+.btn.btn-icon svg {
+    max-width: 25px;
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.btn.btn-icon {
+    padding-left: 35px;
+    position: relative;
+}
+
+.btn-new {
+    padding: 5px 16px;
+    background: var(--primary-collor);
+    border-radius: 15px;
+    display: inline-block;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.btn-success {
+    background: rgba(29, 134, 35, 0.938);
+    color: #fff;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+    background: rgba(134, 29, 29, 0.938);
+    color: #fff;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+
+.login-card {
+    display: flex;
+    position: absolute;
+    width: 500px;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    -webkit-backdrop-filter: blur(100px);
+    backdrop-filter: blur(100px);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.login-card-left {
+    width: 200px;
+    background: rgb(147, 203, 255);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    // background-image: url('../images/bg/colors.jpg');
+    background-size: 530%;
+    background-blend-mode: multiply;
+    position: relative;
+    background-position: center;
+}
+
+.card-header {
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    font-weight: 300;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 7px;
+}
+
+.login-card-left p {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.login-body {
+    padding: 25px;
+    flex-grow: 1;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .login-card {
+        flex-direction: column;
+        width: 82%;
+    }
+
+    .login-card-left {
+        width: 100%;
+        height: 190px;
+        border-radius: 4px 4px 0 0;
+    }
+}

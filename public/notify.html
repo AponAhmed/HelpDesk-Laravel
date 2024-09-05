@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push Notification Example</title>
+</head>
+<body>
+    <button onclick="notifyUser()">Notify Me</button>
+
+    <script>
+       function notifyUser() {
+    console.log("Notification permission status:", Notification.permission);
+    if (Notification.permission === "granted") {
+        console.log("Permission granted. Showing notification...");
+        showNotification();
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+            console.log("Permission request result:", permission);
+            if (permission === "granted") {
+                showNotification();
+            } else {
+                console.log("Permission denied.");
+            }
+        }).catch(error => {
+            console.error("Error requesting notification permission:", error);
+        });
+    } else {
+        console.log("Notification permission denied.");
+    }
+}
+
+function showNotification() {
+    try {
+        const notification = new Notification("Title of the Notification", {
+            body: "This is the body of the notification.",
+            icon: "path/to/icon.png"
+        });
+        console.log("Notification created:", notification);
+        notification.onclick = function(event) {
+            event.preventDefault();
+            window.open('https://example.com', '_blank');
+        };
+    } catch (error) {
+        console.error("Error showing notification:", error);
+    }
+}
+
+    </script>
+</body>
+</html>

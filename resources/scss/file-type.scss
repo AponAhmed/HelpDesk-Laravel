@@ -1,0 +1,52 @@
+.file-icon {
+    background-image: url("../images/icons/file.png");
+}
+
+.file-icon.file-png,
+.file-icon.file-jpeg,
+.file-icon.file-jpg,
+.file-icon.file-webp,
+.file-icon.file-gif,
+.file-icon.file-bmp {
+    background-image: url("../images/icons/jpg.png");
+}
+
+.file-icon.file-jpg {
+    filter: hue-rotate(90deg);
+}
+
+.file-icon.file-webp {
+    filter: hue-rotate(228deg);
+}
+
+.file-icon.file-xlsx,
+.file-icon.file-xlx {
+    background-image: url("../images/icons/xls.png");
+}
+
+.file-icon.file-csv {
+    background-image: url("../images/icons/csv.png");
+}
+
+.file-icon.file-pdf {
+    background-image: url("../images/icons/pdf.png");
+}
+
+.file-icon.file-ppt {
+    background-image: url("../images/icons/ppt.png");
+}
+
+.file-icon.file-rtf {
+    background-image: url("../images/icons/rtf.png");
+}
+
+.file-icon.file-zip,
+.file-icon.file-rar,
+.file-icon.file-7z {
+    background-image: url("../images/icons/zip.png");
+}
+
+.file-icon.file-doc,
+.file-icon.file-docx {
+    background-image: url("../images/icons/doc.png");
+}

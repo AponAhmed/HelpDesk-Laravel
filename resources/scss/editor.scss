@@ -1,0 +1,81 @@
+/*Reset All external Style from Editor */
+/* Reset editor styles */
+html body #editorElement {
+    margin: 0;
+
+    * {
+        line-height: normal;
+        font-weight: normal;
+    }
+
+    ul,
+    ol {
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 0;
+        padding-left: 40px;
+        list-style: initial;
+
+        li {
+            list-style: initial;
+        }
+    }
+
+
+    a {
+        color: #00c;
+        text-decoration: underline;
+    }
+
+    p {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-top: 0.67em;
+        margin-bottom: 0.67em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin-top: 0.83em;
+        margin-bottom: 0.83em;
+    }
+
+    h3 {
+        font-size: 1.17em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    h4 {
+        font-size: 1em;
+        margin-top: 1.33em;
+        margin-bottom: 1.33em;
+    }
+
+    h5 {
+        font-size: 0.83em;
+        margin-top: 1.67em;
+        margin-bottom: 1.67em;
+    }
+
+    h6 {
+        font-size: 0.67em;
+        margin-top: 2.33em;
+        margin-bottom: 2.33em;
+    }
+
+    blockquote {
+        margin: 0 0 0 40px;
+        border-left: 2px solid #ccc;
+        padding-left: 10px;
+    }
+
+}

@@ -1,0 +1,43 @@
+@media only screen and (max-width: 768px) {
+
+    .hdesk-wrap .main-wrap .singleController .dateTime {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+    .hdesk-wrap .main-wrap .mail-list-item .snippet .subject-line {
+        margin-bottom: 0;
+        margin-top: 6px;
+        font-size: 13px;
+        color: #6f6f6f;
+    }
+
+    .hdesk-wrap .main-wrap .mail-list-item .snippet .body-snippet {
+        display: none;
+    }
+
+    .hdesk-wrap .main-wrap .mail-list-item .snippet {
+        padding-left: 0;
+    }
+
+    .hdesk-wrap .main-wrap .mail-list-item .listControll {
+        margin-right: 4px;
+    }
+
+    .hdesk-wrap .main-wrap .mail-list-item .listControll .list-checkBox {
+        padding: 2px;
+    }
+
+    .mail-user .user-name {
+        display: none;
+    }
+
+    .mail-user .user-icon {
+        height: 15px;
+        margin: 0;
+    }
+
+    .direct-actions {
+        display: none;
+    }
+
+}
