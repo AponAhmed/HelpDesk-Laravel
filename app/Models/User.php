@@ -62,6 +62,16 @@ class User extends Authenticatable
         $role = $this->userRole();
         return $this->roles = $role->name;
     }
+
+    public function getChannelID()
+    {
+        $role = $this->userRole();
+        if (isset($role->name) && $role->name == "Super Admin" || $role->name == "Admin") {
+            return "adminprev";
+        }
+        return "userPrev";
+    }
+
     /**
      * Append role ID as roleID  Attribute
      */
