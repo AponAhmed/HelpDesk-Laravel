@@ -298,32 +298,39 @@ class MailList {
 
     broadcastReceive() {
 
-        window.Echo.private('mail.' + USER_ID).listen('MailArrived', (e) => {
-            this.item = e;
-            //console.log(this.item);
+        window.Echo.private(`mail.${USER_ID}.${USER_MAIL_CHANNEL}.${this.box}`).listen('MailArrived', (e) => {
 
-            let listitem = new SingleItem(this, {
-                item: this.item,
-                box: this.box,
-                actions: this.actions,
-                detailsActions: this.detailsActions
-            });
-            this.lists[this.item.id] = listitem;
-            //this.dataWrap.appendChild(listitem.singleListItem());
-            this.dataWrap.insertBefore(listitem.singleListItem(), this.dataWrap.firstChild);
+            if (e.hasOwnProperty(USER_MAIL_CHANNEL)) {
+                let action = e[USER_MAIL_CHANNEL];
+                this.item = e.listItem;
+                if (action === 'prepend') {
+                    let listitem = new SingleItem(this, {
+                        item: this.item,
+                        box: this.box,
+                        actions: this.actions,
+                        detailsActions: this.detailsActions
+                    });
+                    this.lists[this.item.id] = listitem;
+                    //this.dataWrap.appendChild(listitem.singleListItem());
+                    this.dataWrap.insertBefore(listitem.singleListItem(), this.dataWrap.firstChild);
 
 
-            const notification = new SysNotify({
-                title: 'New Mail Arrived',
-                body: 'You have received a new email from John Doe.',
-                icon: 'path/to/icon.png',
-                link: 'https://mailapp.example.com/inbox',
-                requireInteraction: true,
-                silent: false
-            });
+                    const notification = new SysNotify({
+                        title: 'New Mail Arrived',
+                        body: 'You have received a new email from John Doe.',
+                        icon: 'path/to/icon.png',
+                        link: 'https://mailapp.example.com/inbox',
+                        requireInteraction: true,
+                        silent: false
+                    });
+                    // Show the notification
+                    notification.showNotification();
+                } else {
+                    console.log(this.item.msg_id);
+                    //Here need to remove items from List 
+                }
+            }
 
-            // Show the notification
-            notification.showNotification();
         });
     }
 
