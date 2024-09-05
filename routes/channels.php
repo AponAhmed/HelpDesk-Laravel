@@ -10,6 +10,6 @@ Broadcast::channel('user.{id}', function ($user, $id) {
 });
 
 
-Broadcast::channel('mail.{userId}', function ($user, $userId) {
+Broadcast::channel('mail.{userId}.{mailChannel}.{box}', function ($user, $userId, $mailChannel, $box) {
     return (int) $user->id === (int) $userId;
 });
