@@ -11,7 +11,8 @@
         const APP_URL = "{{ config('app.url') }}";
         const ATTACH = "/storage/{{ config('attachment.attachment_path') }}/";
         const IN_ATTACH = "/storage/{{ config('attachment.inline_attachment_path') }}/";
-        const USER_ID = {{ Auth::user()->id }}
+        const USER_ID = {{ Auth::user()->id }};
+        const USER_MAIL_CHANNEL = "{{ Auth::user()->getChannelID() }}";
     </script>
 </head>
 <!--detailsOpend-->
