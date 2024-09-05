@@ -170,7 +170,8 @@ class MailList extends Model
         $this->user = $userID;
 
         if ($this->update()) {
-            broadcast(new MailArrived($this));
+            $action = $this->user != 0 ? "assign" : "unAssign";
+            broadcast(new MailArrived($this, $action));
             return true;
         }
         return false;
