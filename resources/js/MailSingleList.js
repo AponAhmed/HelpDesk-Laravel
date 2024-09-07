@@ -259,6 +259,9 @@ class SingleItem {
         return listItem.element;
     }
 
+    remove() {
+        this.dom.remove();
+    }
 
 }
 
