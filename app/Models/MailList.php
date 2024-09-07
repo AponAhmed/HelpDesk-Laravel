@@ -12,6 +12,7 @@ use App\Models\Department;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use stdClass;
 
 class MailList extends Model
@@ -140,9 +141,14 @@ class MailList extends Model
      */
     function addLabel($label)
     {
+
         $labels = explode(",", $this->labels);
         $labels[] = $label;
         $this->labels = $this->labels = implode(",", array_filter($labels));
+        if ($label == 'TRASH') {
+            $this->broadcast('remove');
+        }
+
         return $this;
     }
 
@@ -163,7 +169,7 @@ class MailList extends Model
     /**
      * Set User Agent To Mail as Assign
      * @param int $userID
-     * @return void
+     * @return boolean
      */
     function setUser($userID)
     {
@@ -171,7 +177,7 @@ class MailList extends Model
 
         if ($this->update()) {
             $action = $this->user != 0 ? "assign" : "unAssign";
-            broadcast(new MailArrived($this, $action));
+            $this->broadcast($action);
             return true;
         }
         return false;
@@ -286,7 +292,19 @@ class MailList extends Model
 
     public function delete()
     {
-        //Other pre delete action will here
+        $this->broadcast('remove');
         parent::delete();
+    }
+
+    public function broadcast($action = "")
+    {
+        //Other pre delete action will here
+      
+        try {
+            broadcast(new MailArrived($this, $action));
+        } catch (\Exception $e) {
+            // Handle the exception if broadcast server is down
+            Log::error('Broadcasting failed: ' . $e->getMessage());
+        }
     }
 }
