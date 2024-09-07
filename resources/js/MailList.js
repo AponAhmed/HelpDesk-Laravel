@@ -300,10 +300,11 @@ class MailList {
 
         window.Echo.private(`mail.${USER_ID}.${USER_MAIL_CHANNEL}.${this.box}`).listen('MailArrived', (e) => {
 
+            console.log(e);
             if (e.hasOwnProperty(USER_MAIL_CHANNEL)) {
                 let action = e[USER_MAIL_CHANNEL];
                 this.item = e.listItem;
-                if (action === 'prepend') {
+                if (action === 'prepend' || action === 'new') {
                     let listitem = new SingleItem(this, {
                         item: this.item,
                         box: this.box,
@@ -325,9 +326,11 @@ class MailList {
                     });
                     // Show the notification
                     notification.showNotification();
-                } else {
-                    console.log(this.item.msg_id);
-                    //Here need to remove items from List 
+                } else if (action === 'remove') {
+                    if (this.lists.hasOwnProperty(this.item.id)) {
+
+                        this.lists[this.item.id].remove();
+                    }
                 }
             }
 
