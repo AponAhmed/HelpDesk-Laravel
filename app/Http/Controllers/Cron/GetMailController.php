@@ -11,6 +11,7 @@ use App\Models\MailDetails;
 use App\Models\MailList;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class GetMailController extends Controller
@@ -174,7 +175,12 @@ class GetMailController extends Controller
                     echo "Mail Downloaded:" . json_encode($info) . " <br>";
                     $this->mail->modifyLabel($mail['id']);
                 }
-                broadcast(new \App\Events\MailArrived($NewList));
+                try {
+                    broadcast(new \App\Events\MailArrived($NewList,'new'));
+                } catch (\Exception $e) {
+                    // Handle the exception if broadcast server is down
+                    Log::error('Broadcasting failed: ' . $e->getMessage());
+                }
             } catch (Exception $ex) {
                 //throw $th;
                 echo $ex->getMessage();
