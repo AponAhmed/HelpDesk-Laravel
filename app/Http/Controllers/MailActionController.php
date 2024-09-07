@@ -155,7 +155,8 @@ class MailActionController extends Controller
                     ->join('user_has_role', 'users.id', '=', 'user_has_role.user_id')
                     ->join('user_roles', 'user_has_role.role_id', '=', 'user_roles.id')
                     ->where('user_roles.name', '!=', 'Super Admin')
-                    //->where('user_roles.name', '!=', 'Admin')
+                    ->where('user_roles.name', '!=', 'Admin')
+                    ->where('users.id', '!=', Auth::user()->id)
                     ->where('status', '1')->get();
                 $data->prepend(['id' => '0', 'name' => 'Unassign']);
                 return $data;
