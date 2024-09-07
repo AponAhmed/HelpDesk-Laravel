@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Handle WebSocket (ws and wss)
+RewriteCond %{HTTP:Upgrade} =websocket [NC]
+RewriteCond %{HTTP:Connection} upgrade [NC]
+RewriteRule ^(.*)$ "http://0.0.0.0:8080/$1" [P,L]
+
+# Set required headers
+RequestHeader set Host %{HTTP_HOST}s
+RequestHeader set Scheme wss
+RequestHeader set SERVER_PORT %{SERVER_PORT}s
+RequestHeader set REMOTE_ADDR %{REMOTE_ADDR}s
+RequestHeader set X-Forwarded-For %{REMOTE_ADDR}s
