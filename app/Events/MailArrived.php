@@ -19,22 +19,52 @@ class MailArrived implements ShouldBroadcastNow
 
     protected MailList $mailList;
     protected string $action;
+    protected $boxChannel;
     /**
      * Create a new event instance.
      */
-    public function __construct(MailList $mailList, $action = 'assign')
+    public function __construct(MailList $mailList, $action = 'assign', $boxChannel = "new")
     {
         //
         $this->mailList = $mailList;
         $this->action = $action;
+        $this->boxChannel = $boxChannel;
     }
 
     public function broadcastWith(): array
     {
+
+        if ($this->action == 'remove') {
+            return [
+                'listItem' => $this->mailList->toArray(),
+                'adminprev' => 'remove',
+                'userPrev' => 'remove',
+            ];
+        }
+
+        if ($this->action == "refresh") {
+            return [
+                'listItem' => $this->mailList->toArray(),
+                'adminprev' => 'refresh',
+                'userPrev' => 'refresh',
+            ];
+        }
+        if ($this->action == "new") {
+            return [
+                'listItem' => $this->mailList->toArray(),
+                'adminprev' => 'new',
+                'userPrev' => 'prepend',
+            ];
+        }
+
+        $adminAction = $this->action == "assign" ? 'remove' : 'prepend';
+        $userAction = $this->action == "assign" ? 'prepend' : 'remove';
+
+
         return [
             'listItem' => $this->mailList->toArray(),
-            'adminprev' => $this->action == "assign" ? 'remove' : 'prepend',
-            'userPrev' => $this->action == "assign" ? 'prepend' : 'remove',
+            'adminprev' => $adminAction,
+            'userPrev' => $userAction,
         ];
     }
 
@@ -46,8 +76,8 @@ class MailArrived implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         $eventChannels = [];
-        if ($this->action === 'assign') {
-            $eventChannels[] =  new PrivateChannel('mail.' . $this->mailList->user . ".userPrev.new");
+        if ($this->action === 'assign' && $this->mailList->user != 0) {
+            $eventChannels[] =  new PrivateChannel('mail.' . $this->mailList->user . ".userPrev." . $this->boxChannel);
         }
 
         $adminUserIds = DB::table('users')
@@ -56,11 +86,14 @@ class MailArrived implements ShouldBroadcastNow
             ->whereIn('user_roles.name', ['Admin', 'Super Admin'])
             ->pluck('users.id');
         foreach ($adminUserIds as $userId) {
-            $eventChannels[] = new PrivateChannel("mail.{$userId}.adminprev.unassigned");
-            $eventChannels[] = new PrivateChannel("mail.{$userId}.adminprev.new");
+            if ($this->action === 'unAssign') {
+                $eventChannels[] = new PrivateChannel("mail.{$userId}.adminprev.unassigned");
+                $eventChannels[] = new PrivateChannel("mail.{$userId}.userPrev.new");
+            } else {
+                $eventChannels[] = new PrivateChannel("mail.{$userId}.adminprev.unassigned");
+                $eventChannels[] = new PrivateChannel("mail.{$userId}.adminprev." . $this->boxChannel);
+            }
         }
-
-
         return $eventChannels;
     }
 }
