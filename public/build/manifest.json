@@ -128,18 +128,18 @@
     "src": "resources/images/icons/zip.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-B2teAVAr.js",
+    "file": "assets/app-CPCIvjJG.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-CCCE_N0Q.css",
+    "file": "assets/app-BRj-JQud.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   },
   "resources/scss/login.scss": {
-    "file": "assets/login-CRFhiL2l.css",
+    "file": "assets/login-BK0WQFGc.css",
     "src": "resources/scss/login.scss",
     "isEntry": true
   }
