@@ -38,7 +38,7 @@ class MailListController extends Controller
         $title = $sidebar->label2Title($label);
 
         $data = ["title" => $title, 'box' => $label];
-        return view("componnents.mailList", $data);
+        return view("mailList", $data);
     }
 
 
