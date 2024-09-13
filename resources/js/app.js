@@ -405,15 +405,16 @@ if (resizableMainWrap) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const notification = new SysNotify({
-        title: 'Permission Granted',
-        body: 'Thanks for your permission granted',
-        icon: 'path/to/icon.png',
-        link: '',
-        requireInteraction: false,
-        silent: true
-    });
-    // Show the notification
-    notification.showNotification();
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//     const notification = new SysNotify({
+//         title: 'Permission Granted',
+//         body: 'Thanks for your permission granted',
+//         icon: 'path/to/icon.png',
+//         link: '',
+//         requireInteraction: false,
+//         silent: true
+//     });
+//     // Show the notification
+//     notification.showNotification();
+// });
+
