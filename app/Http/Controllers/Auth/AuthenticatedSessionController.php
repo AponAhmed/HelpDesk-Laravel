@@ -28,7 +28,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $box = Auth::user()->roles == "Admin" || Auth::user()->roles == "Super Admin" ? "unassigned" : "new";
+        $redirect=route('mailListIndex', $box, true);
+        return redirect($redirect);
     }
 
     /**
