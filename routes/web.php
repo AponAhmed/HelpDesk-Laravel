@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\TestEvent;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\PermissionAccess;
 use Illuminate\Support\Facades\Route;
@@ -40,8 +41,8 @@ Route::middleware('auth')->group(function () {
 
     //Mail list and View Route
     Route::middleware(PermissionAccess::class . ":box")->group(function () {
-        Route::get("/", [MailListController::class, "index"])->name("home")->middleware();
-        Route::get("/list/{label}", [MailListController::class, "index"]);
+        Route::get("/", [MailListController::class, "index"])->name("home");
+        Route::get("/list/{label}", [MailListController::class, "index"])->name('mailListIndex');
         Route::get("/list/{label}/data", [MailListController::class, "data"]);
         Route::get("/data", [MailListController::class, "data"])->name('mailList');
         Route::get("/mail-stream", [MailListController::class, "mailStream"])->name('mailStream');
@@ -151,6 +152,11 @@ Route::middleware('auth')->group(function () {
                 Route::get("/", [GeneralSettings::class, "index"])->name("generalSettings");
                 Route::post("/", [GeneralSettings::class, "store"])->name("generalSettingsStore");
             });
+        Route::prefix("/ai")
+            ->middleware(PermissionAccess::class . ":settings,ai,view")
+            ->group(function () {
+                Route::get("/", [GeneralSettings::class, "aiSettings"])->name("aiSettings");
+            });
     });
 
 
@@ -182,6 +188,7 @@ Route::get('/broadcast', function () {
     broadcast(new \App\Events\MailArrived(MailList::find(2)));
     return 'Event triggered!';
 });
+
 
 
 require __DIR__ . '/auth.php';
