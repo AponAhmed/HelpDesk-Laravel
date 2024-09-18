@@ -532,6 +532,10 @@ table tr.removed td {
     padding: 5px 0;
 }
 
+.settings-group-inner {
+    padding-left: 15px;
+}
+
 .data-title h2 {
     font-size: 18px;
     font-weight: 400;
@@ -2169,10 +2173,16 @@ table tr.removed td {
         .ipInput {
             border: 0;
             width: 115px;
-            padding-left: 5px;
             font-size: 12px;
             display: none;
+            padding: 0 5px;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0;
+            }
         }
+
 
         .ipInput:focus-visible {
             outline: none;
@@ -2787,7 +2797,7 @@ table tr.removed td {
     padding: 30px 50px;
 
     .settings-group {
-        margin-bottom: 15px;
+        margin-bottom: 25px;
     }
 
     .settings-group-head {
@@ -2795,6 +2805,8 @@ table tr.removed td {
         display: block;
         border-bottom: 1px solid #f7f7f7;
         padding: 5px 0;
+        font-size: 16px;
+        color: #5b5b5b
     }
 
     .option-wrap {
