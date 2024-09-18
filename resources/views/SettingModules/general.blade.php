@@ -38,15 +38,24 @@
                 }
 
                 window.removeIp = function(_this) {
-                    Notiflix.Confirm.show(
-                        "IP Confirm",
-                        "Are you sure to Remove : " + $(_this).closest(".ipItem").find('input').val(),
-                        "Yes",
-                        "No",
-                        function() {
+                    new window.ConfirmBox({
+                        title: "Access IP Remove",
+                        message: "Are you sure to Remove : " + $(_this).closest(".ipItem").find('input')
+                            .val(),
+                        yes: "Remove",
+                        yesCallback: () => {
                             $(_this).closest('.ipItem').remove();
                         }
-                    );
+                    });
+                    // Confirm.show(
+                    //     "IP Confirm",
+                    //     "Are you sure to Remove : " + $(_this).closest(".ipItem").find('input').val(),
+                    //     "Yes",
+                    //     "No",
+                    //     function() {
+                    //       
+                    //     }
+                    // );
                 }
 
                 $(".addNewIP").on('click', function() {
@@ -82,10 +91,12 @@
                     <div class="optionGeneralArea">
                         <div class="settings-group">
                             <label class="settings-group-head">User Options</label>
-                            <div class="option-wrap">
-                                <label>Time Zone (hr)</label>
-                                <input type="text" class="text-input" name="option[time_zone]"
-                                    value="{{ $settings->get_option('time_zone') }}" placeholder="Ex: +6">
+                            <div class="settings-group-inner">
+                                <div class="option-wrap">
+                                    <label>Time Zone (hr)</label>
+                                    <input type="text" class="text-input" name="option[time_zone]"
+                                        value="{{ $settings->get_option('time_zone') }}" placeholder="Ex: +6">
+                                </div>
                             </div>
                         </div>
 
@@ -95,47 +106,49 @@
                                         name="optionGlobal[release_control]"
                                         {{ $settings->get_option('release_control', true) == '1' ? 'checked' : '' }}>
                                     Release Control</label>
-                                <div class="option-wrap">
-                                    <div class="release-control-role">
-                                        <div class="roleWrapper">
-                                            @foreach ($settings->releaseRoles() as $k => $releaseRole)
-                                                @php
-                                                    $k++;
-                                                @endphp
-                                                <strong class="release-role-item">
-                                                    <span class='releaseRoleType'>{{ $releaseRole['type'] }}</span>:
-                                                    {{ $releaseRole['name'] }}
-                                                    <input type="hidden"
-                                                        name="optionGlobal[releaseStep][{{ $k }}][type]"
-                                                        value="{{ $releaseRole['type'] }}">
-                                                    <input type="hidden"
-                                                        name="optionGlobal[releaseStep][{{ $k }}][id]"
-                                                        value="{{ $releaseRole['id'] }}">
-                                                    <span class='removeRoleType'
-                                                        onclick="removeReleaseRole(this)">&times;</span>
-                                                </strong>
-                                            @endForeach
-                                        </div> {{-- Role Wraper --}}
-                                        <div class="customSelect">
-                                            <div class="customSelectTog releaseRoleCustomSelect"
-                                                onclick="customSelect(event,this)">+</div>
-                                            <div class="optionItems" style="display:none">
-                                                <label class="optionGroupLabel">User Roles</label>
-                                                @foreach ($roles as $role)
-                                                    <div class="optionitem-wrap">
+                                <div class="settings-group-inner">
+                                    <div class="option-wrap">
+                                        <div class="release-control-role">
+                                            <div class="roleWrapper">
+                                                @foreach ($settings->releaseRoles() as $k => $releaseRole)
+                                                    @php
+                                                        $k++;
+                                                    @endphp
+                                                    <strong class="release-role-item">
+                                                        <span class='releaseRoleType'>{{ $releaseRole['type'] }}</span>:
+                                                        {{ $releaseRole['name'] }}
+                                                        <input type="hidden"
+                                                            name="optionGlobal[releaseStep][{{ $k }}][type]"
+                                                            value="{{ $releaseRole['type'] }}">
+                                                        <input type="hidden"
+                                                            name="optionGlobal[releaseStep][{{ $k }}][id]"
+                                                            value="{{ $releaseRole['id'] }}">
+                                                        <span class='removeRoleType'
+                                                            onclick="removeReleaseRole(this)">&times;</span>
+                                                    </strong>
+                                                @endForeach
+                                            </div> {{-- Role Wraper --}}
+                                            <div class="customSelect">
+                                                <div class="customSelectTog releaseRoleCustomSelect"
+                                                    onclick="customSelect(event,this)">+</div>
+                                                <div class="optionItems" style="display:none">
+                                                    <label class="optionGroupLabel">User Roles</label>
+                                                    @foreach ($roles as $role)
+                                                        <div class="optionitem-wrap">
+                                                            <a class="custom-select-option"
+                                                                onclick="setRole2Release(event,this)" data-type="role"
+                                                                href="javascript:void(0)"
+                                                                data-id="{{ $role->id }}">{{ $role->name }}</a>
+                                                        </div>
+                                                    @endForeach
+                                                    <label class="optionGroupLabel">Users</label>
+                                                    @foreach ($users as $user)
                                                         <a class="custom-select-option"
-                                                            onclick="setRole2Release(event,this)" data-type="role"
-                                                            href="javascript:void(0)"
-                                                            data-id="{{ $role->id }}">{{ $role->name }}</a>
-                                                    </div>
-                                                @endForeach
-                                                <label class="optionGroupLabel">Users</label>
-                                                @foreach ($users as $user)
-                                                    <a class="custom-select-option"
-                                                        onclick="setRole2Release(event,this)" href="javascript:void(0)"
-                                                        data-type="user"
-                                                        data-id="{{ $user->id }}">{{ $user->name }}</a>
-                                                @endForeach
+                                                            onclick="setRole2Release(event,this)"
+                                                            href="javascript:void(0)" data-type="user"
+                                                            data-id="{{ $user->id }}">{{ $user->name }}</a>
+                                                    @endForeach
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +160,7 @@
                                         value="1"
                                         {{ $settings->get_option('ip_restricted', true) == '1' ? 'checked' : '' }}
                                         type="checkbox">&nbsp;IP Allowed</label>
-                                <div class="restricted_ip_area">
+                                <div class="restricted_ip_area settings-group-inner">
                                     <div class="IPList">
                                         @foreach ($settings->allowed_ip() as $ip)
                                             <span class="ipItem">
@@ -165,6 +178,8 @@
 
                                 </div>
                             </div>
+
+
                         @endif
                     </div>
                     <div class="data-table-footer settings">
