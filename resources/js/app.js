@@ -418,3 +418,49 @@ if (resizableMainWrap) {
 //     notification.showNotification();
 // });
 
+
+//Ai  Settings 
+
+document.addEventListener('DOMContentLoaded', function () {
+    //Ai Settings 
+    let aiPorivider = document.getElementById("aiProvider");
+    if (aiPorivider) {
+        aiSettingsFieldManage(aiPorivider.value);
+        aiPorivider.addEventListener("change", function (e) {
+            aiSettingsFieldManage(aiPorivider.value);
+        });
+    }
+});
+
+function aiSettingsFieldManage(prov) {
+    // Get all elements with class "freebox-settings"
+    var freeboxSettings = document.querySelectorAll('.freebox-settings');
+
+    // Get all elements with class "gemini-settings"
+    var geminiSettings = document.querySelectorAll('.gemini-settings');
+
+    switch (prov) {
+        case "freebox":
+            // Loop through all elements with class "gemini-settings" and add class "hidden"
+            geminiSettings.forEach(function (element) {
+                element.classList.add('hidden');
+            });
+
+            // Loop through all elements with class "freebox-settings" and remove class "hidden"
+            freeboxSettings.forEach(function (element) {
+                element.classList.remove('hidden');
+            });
+            break;
+        case "gemini":
+            // Loop through all elements with class "freebox-settings" and add class "hidden"
+            freeboxSettings.forEach(function (element) {
+                element.classList.add('hidden');
+            });
+
+            // Loop through all elements with class "gemini-settings" and remove class "hidden"
+            geminiSettings.forEach(function (element) {
+                element.classList.remove('hidden');
+            });
+            break;
+    }
+}
