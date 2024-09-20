@@ -38,7 +38,7 @@ class SidebarController extends Controller
         ];
 
         $this->icons = new iconController();
-        $this->user = Auth()->user();
+        $this->user = Auth::user();
     }
 
     public static function settingModules()
@@ -47,6 +47,11 @@ class SidebarController extends Controller
             "general" => [
                 "label" => "General",
                 "icon" => "cog",
+                "accessLabel" => ["Super Admin", "Admin", "Merchandiser"],
+            ],
+            "ai" => [
+                "label" => "AI Settings",
+                "icon" => "ai",
                 "accessLabel" => ["Super Admin", "Admin"],
             ],
             "department" => [
