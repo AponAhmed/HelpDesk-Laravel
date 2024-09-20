@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Option;
 use App\Models\User;
 use App\Models\UserRole;
+use Illuminate\Support\Facades\Auth;
 
 class GeneralSettings extends Controller
 {
@@ -19,11 +20,21 @@ class GeneralSettings extends Controller
     public function index()
     {
         $roles = UserRole::where("name", "!=", "Merchandiser")->get();
-        return view("SettingModules.general")->with([
+        $aiSettings = config('ai.settings');
+        $defaultProvider = config('ai.provider'); // Default provider from config
+        return view("SettingModules.general",)->with([
+            "aiSettings" => $aiSettings,
+            "defaultProvider" => $defaultProvider,
             "settings" => $this,
             "users" => User::where('status', '1')->get(),
             "roles" => $roles,
         ]);
+    }
+
+    public function aiSettings()
+    {
+
+        return view("SettingModules.ai", ['Settings' => Option::class]);
     }
 
     function releaseRoles()
@@ -80,7 +91,7 @@ class GeneralSettings extends Controller
      */
     public function get_option(string $k, $global = false)
     {
-        $userId = Auth()->user()->id;
+        $userId = Auth::user()->id;
         if ($global) {
             $userId = 0;
         }
@@ -104,7 +115,7 @@ class GeneralSettings extends Controller
      */
     public function add_option(string $key, $val, $global = false)
     {
-        $userId = Auth()->user()->id;
+        $userId = Auth::user()->id;
         if ($global) {
             $userId = 0;
         }
