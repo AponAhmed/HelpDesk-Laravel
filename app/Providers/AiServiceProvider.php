@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Option;
 use Illuminate\Support\ServiceProvider;
 use App\Services\AiProviderInterface;
-use App\Services\OpenAiProvider; // Default provider
-use App\Services\GeminiAiProvider; // Optional other provider
+use App\Services\FreeBoxAiProvider;
+use App\Services\OpenAiProvider;
+use App\Services\GeminiAiProvider;
 
 class AiServiceProvider extends ServiceProvider
 {
@@ -13,10 +15,12 @@ class AiServiceProvider extends ServiceProvider
     {
         // You can dynamically bind the provider here based on conditions
         $this->app->bind(AiProviderInterface::class, function ($app) {
-            $provider = config('ai.provider'); // get the provider name from config
+            $provider = Option::get('ai_provider', 'freebox', true);
             switch ($provider) {
                 case 'gemini':
                     return new GeminiAiProvider();
+                case 'freebox':
+                    return new FreeBoxAiProvider();
                 case 'openai':
                 default:
                     return new OpenAiProvider(); // Default provider
