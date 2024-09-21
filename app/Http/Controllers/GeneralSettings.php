@@ -33,7 +33,6 @@ class GeneralSettings extends Controller
 
     public function aiSettings()
     {
-
         return view("SettingModules.ai", ['Settings' => Option::class]);
     }
 
