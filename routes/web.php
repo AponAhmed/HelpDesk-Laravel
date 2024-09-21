@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\TestEvent;
+use App\Http\Controllers\AiService;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\PermissionAccess;
@@ -182,6 +183,13 @@ Route::get('/dashboard', function () {
 Route::get('/rev', function () {
     return view('reverb');
 });
+
+
+require __DIR__ . '/auth.php';
+
+
+//Testing Routes 
+
 Route::get('/broadcast', function () {
     //broadcast(new \App\Events\TestEvent('Hello World'));
 
@@ -191,4 +199,4 @@ Route::get('/broadcast', function () {
 
 
 
-require __DIR__ . '/auth.php';
+Route::get('/ai', [AiService::class, 'generate']);
