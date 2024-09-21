@@ -435,6 +435,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function aiSettingsFieldManage(prov) {
     // Get all elements with class "freebox-settings"
     var freeboxSettings = document.querySelectorAll('.freebox-settings');
+    var openAiSettings = document.querySelectorAll('.openai-settings');
 
     // Get all elements with class "gemini-settings"
     var geminiSettings = document.querySelectorAll('.gemini-settings');
@@ -443,6 +444,10 @@ function aiSettingsFieldManage(prov) {
         case "freebox":
             // Loop through all elements with class "gemini-settings" and add class "hidden"
             geminiSettings.forEach(function (element) {
+                element.classList.add('hidden');
+            });
+
+            openAiSettings.forEach(function (element) {
                 element.classList.add('hidden');
             });
 
@@ -456,9 +461,24 @@ function aiSettingsFieldManage(prov) {
             freeboxSettings.forEach(function (element) {
                 element.classList.add('hidden');
             });
-
+            openAiSettings.forEach(function (element) {
+                element.classList.add('hidden');
+            });
             // Loop through all elements with class "gemini-settings" and remove class "hidden"
             geminiSettings.forEach(function (element) {
+                element.classList.remove('hidden');
+            });
+            break;
+        case "openai":
+            // Loop through all elements with class "freebox-settings" and add class "hidden"
+            freeboxSettings.forEach(function (element) {
+                element.classList.add('hidden');
+            });
+            // Loop through all elements with class "gemini-settings" and remove class "hidden"
+            geminiSettings.forEach(function (element) {
+                element.classList.add('hidden');
+            });
+            openAiSettings.forEach(function (element) {
                 element.classList.remove('hidden');
             });
             break;
