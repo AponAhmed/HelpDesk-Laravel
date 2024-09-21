@@ -19,7 +19,7 @@ class Option extends Model
         if ($global) {
             $userId = 0;
         }
-        return self::updateOrCreate(['key' => $name, 'user' => $userId], ['value' => $value]);
+        return self::updateOrCreate(['key' => $name, 'user' => $userId], ['val' => $value]);
     }
 
     public static function get($name, $default = null, $global = false)
@@ -29,6 +29,6 @@ class Option extends Model
             $userId = 0;
         }
         $setting = self::where('key', $name)->where('user', $userId)->first();
-        return $setting ? $setting->value : $default;
+        return $setting ? $setting->val : $default;
     }
 }
