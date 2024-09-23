@@ -106,7 +106,7 @@ table tr.removed td {
     }
 }
 
-.collapse {
+.collapseable {
     display: none;
 }
 
@@ -1047,6 +1047,7 @@ table tr.removed td {
     &.view-icon {
         background-image: url('../images/icons/view.png');
     }
+
 }
 
 .attachment-icon {
@@ -1081,6 +1082,8 @@ table tr.removed td {
 
 }
 
+
+
 .bg-icon {
     width: 15px;
     background-size: 15px;
@@ -1096,6 +1099,12 @@ table tr.removed td {
         background-image: url('../images/icons/compose.png');
     }
 
+    &.ai-compose-icon {
+        background-image: url('../images/icons/ai-write.png');
+        width: 20px;
+        height: 20px;
+        background-size: 100%;
+    }
 }
 
 .hdesk-wrap .main-wrap .mail-list-item:hover .singleController .single-actions .action-wrap {
@@ -2296,6 +2305,11 @@ table tr.removed td {
     width: auto;
     outline: none;
     flex-grow: 1;
+    padding: 0;
+}
+
+.contectIn:focus {
+    box-shadow: none;
 }
 
 .contectIn:focus-visible {
