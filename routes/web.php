@@ -19,15 +19,12 @@ use App\Http\Controllers\GeneralSettings;
 use App\Http\Controllers\MailActionController;
 use App\Http\Controllers\MailReadController;
 use App\Http\Controllers\ViewFilterController as ViewFilter;
+use App\Http\Middleware\CheckAiAccess;
 use App\Models\MailList;
 
-Route::prefix("/abc")->controller(UserController::class)->group(function () {
-    Route::get("/test", function () {
-        echo "Testing Middleware";
-    });
-})->middleware(PermissionAccess::class . ":settings,abc,test");
 
 Route::middleware('auth')->group(function () {
+    Route::post('/ai', [AiService::class, 'generate'])->middleware(CheckAiAccess::class);
 
 
     Route::prefix("action")->controller(MailActionController::class)->group(function () {
@@ -178,25 +175,24 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', PermissionAccess::class])->name('dashboard');
 
+require __DIR__ . '/auth.php';
 
+
+
+//Testing Routes 
 //Test routes for event listeners
+Route::prefix("/abc")->controller(UserController::class)->group(function () {
+    Route::get("/test", function () {
+        echo "Testing Middleware";
+    });
+})->middleware(PermissionAccess::class . ":settings,abc,test");
+
 Route::get('/rev', function () {
     return view('reverb');
 });
 
-
-require __DIR__ . '/auth.php';
-
-
-//Testing Routes 
-
 Route::get('/broadcast', function () {
     //broadcast(new \App\Events\TestEvent('Hello World'));
-
     broadcast(new \App\Events\MailArrived(MailList::find(2)));
     return 'Event triggered!';
 });
-
-
-
-Route::get('/ai', [AiService::class, 'generate']);
