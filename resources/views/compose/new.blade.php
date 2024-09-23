@@ -153,6 +153,20 @@
                     fileUp.upload(files[0]);
                 }
 
+                aicomposer.addEventListener('click', () => {
+                    new AiWindow({
+                        onResponse: (response) => {
+                            console.log(response);
+                        },
+                        onResponseUse: (response) => {
+                            // Replace \n with <br> before setting the data in CKEditor
+                            const formattedResponse = response.replace(/\n/g, '<br>');
+                            editor.setData(formattedResponse); // Set the formatted response
+                        },
+                    });
+                });
+
+
             });
         </script>
     </x-slot>
@@ -183,7 +197,7 @@
                             <input class="contectIn" id="addToCon" onkeyup="findContact(event, this, 'to')"
                                 onchange="addToCh(this, 'to')" type="text" placeholder="Recipients">
                         </div>
-                        <div class="ccInput collapse {{ count($data->addresses('cc')) > 0 ? 'has-address' : '' }} ">
+                        <div class="ccInput collapseable {{ count($data->addresses('cc')) > 0 ? 'has-address' : '' }} ">
                             <div id="ccPrt" class="toArea compose-input">
                                 <div id="ccContacts">
                                     {{-- CC Address Here --}}
@@ -199,7 +213,8 @@
                                     onchange="addToCh(this, 'cc')" type="text" placeholder="Cc">
                             </div>
                         </div>
-                        <div class="bccInput collapse  {{ count($data->addresses('bcc')) > 0 ? 'has-address' : '' }}">
+                        <div
+                            class="bccInput collapseable  {{ count($data->addresses('bcc')) > 0 ? 'has-address' : '' }}">
                             <div id="bccPrt" class="toArea compose-input">
                                 <div id="bccContacts">
                                     {{-- BCC Address Here --}}
@@ -220,7 +235,13 @@
                 <input type="text" class="subject compose-input" value="{{ $data->subject }}" name="subject"
                     placeholder="Subject">
             </div>
-            <div class="compose-body">
+            <div class="compose-body relative">
+                @can('ai')
+                    <div id="aicomposer" title="Compose by Ai"
+                        class="absolute right-2 top-2 z-10 p-1 hover:bg-gray-100 rounded-md"><i
+                            class="bg-icon ai-compose-icon block"></i></div>
+                @endcan
+
                 <div id="editor">{!! isset($data->MailDetails->msg_body) ? $data->MailDetails->msg_body : '' !!}</div>
             </div>
             <div class="compose-head">
