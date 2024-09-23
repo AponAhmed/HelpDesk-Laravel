@@ -36,10 +36,11 @@ class FreeBoxAiProvider implements AiProviderInterface
         $data = [
             'language' => $this->ai_lang,
             'tone' => $this->tone,
-            'url' => "open-ai", //$this->url,
+            'url' =>$this->url,
             'prompt' => $prompt,
         ];
 
+        //dd($data);
         $response = $this->sendPostRequest($url, $data, $headers);
         // Check if the response is valid and not an error message
         if (strpos($response, 'Error:') !== false) {

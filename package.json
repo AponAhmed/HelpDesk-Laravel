@@ -23,6 +23,7 @@
     "dependencies": {
         "@aponahmed/ckeditor5-ballon": "^0.0.1",
         "@aponahmed/dombuilder": "^1.0.6",
-        "jquery": "^3.6.3"
+        "jquery": "^3.6.3",
+        "marked": "^14.1.2"
     }
 }

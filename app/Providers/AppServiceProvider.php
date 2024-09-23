@@ -22,8 +22,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
-        //
+
+
+        Gate::define('ai', function (User $user) {
+            if ($user->isAdmin()) {
+                return true;
+            }
+        });
+
         // Gate::define('view',function(User $user,String $viewName){
         //     return $user->canView($viewName);
         // });

@@ -10,6 +10,7 @@ import fileUploader from "./fileUpload";
 
 import MailList from "./MailList";
 import Resizer from "./Resizer";
+import AiWindow from "./AiWindow";
 import SysNotify from './SysNotify';
 
 
@@ -24,8 +25,8 @@ Alpine.start();
 // window.Pusher = Pusher;
 
 window.$ = $;
-
 window.popup = popup;
+window.AiWindow = AiWindow;
 window.pagination = pagination;
 window.DataBuilder = DataBuilder;
 window.ConfirmBox = ConfirmBox;
