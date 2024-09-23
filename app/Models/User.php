@@ -54,6 +54,11 @@ class User extends Authenticatable
         $this->DefaultFilter();
     }
 
+    public function isAdmin(){
+        $role = $this->userRole();
+        return $this->isAdmin = $role->name == "Super Admin" || $role->name == "Admin";
+    }
+
     /**
      * Append role Name as role Attribute
      */
