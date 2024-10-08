@@ -67,7 +67,12 @@ class GeneralSettings extends Controller
     public function store(Request $req)
     {
         $options = [];
-        parse_str($req->settings, $options);
+        if(!is_array($req->settings)){
+            parse_str($req->settings, $options);
+        }else{
+            $options = $req->settings;
+        }
+      
         if (isset($options["option"])) {
             $optionArr = $options["option"];
             foreach ($optionArr as $k => $val) {
