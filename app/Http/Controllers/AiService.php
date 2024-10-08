@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Option;
 use App\Services\AiProviderInterface;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,18 @@ class AiService extends Controller
     public function __construct(AiProviderInterface $aiProvider)
     {
         $this->aiProvider = $aiProvider;
+    }
+
+    public static function getAiSettings()
+    {
+        $provider = Option::get('ai_provider', 'freebox', true);
+        $creativity = Option::get('ai_temperature', '0.7', true);
+        $tone = Option::get('ai_tone', 'Formal', true);
+        return [
+            'provider' => $provider,
+            'creativity' => $creativity,
+            'tone' => $tone,
+        ];
     }
 
     public function generate(Request $request)
