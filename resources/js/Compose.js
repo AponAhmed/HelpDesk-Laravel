@@ -3,6 +3,7 @@ import BalloonEditor from "@aponahmed/ckeditor5-ballon";//"@ckeditor/ckeditor5-b
 import { ConfirmBox, Notification, tooltip } from "./elements";
 import fileUploader from "./fileUpload";
 import axios from "axios";
+import AiWindow from "./AiWindow";
 
 const autoSaveTrigDur = 2000;
 
@@ -325,6 +326,21 @@ class Compose {
 
         //right Controll
         this.quickControll = new el('div').class('compose-quick-controll');
+        //Ai Helper
+        this.aiControl = new el('div').class('ai-controll').event('click', () => {
+            new AiWindow({
+                onResponse: (response) => {
+                    //console.log(response);
+                },
+                onResponseUse: (response) => {
+                    // Replace \n with <br> before setting the data in CKEditor
+                    const formattedResponse = response.replace(/\n/g, '<br>');
+                    this.editor.setData(formattedResponse); // Set the formatted response
+                },
+            });
+        }).class('single-action').classes(['ai-compose-icon', 'bg-icon']).attr('title', 'Compose By AI');
+        this.quickControll.append(this.aiControl.element);
+        //Expand 
         this.expControll = new el('div').class('expand-controll').event('click', () => {
             this.expandTrig();
         }).class('single-action').class('expand-icon').attr('title', 'Expand Window');
