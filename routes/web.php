@@ -2,6 +2,7 @@
 
 use App\Events\TestEvent;
 use App\Http\Controllers\AiService;
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\PermissionAccess;
@@ -161,6 +162,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Attachment
+
+    Route::get('attachments/{filename}', [AttachmentController::class, 'showAttachment']);
+    Route::get('inline-attachments/{filename}', [AttachmentController::class, 'showInlineAttachment']);
 });
 //Extra Routes
 Route::view("/access-denied", "errors.access-denied")->name("access-denied");
