@@ -12,7 +12,7 @@ use thiagoalessio\TesseractOCR\TesseractOCR;
 class Ocr
 {
 
-    public static function createImageData($imageFile, $patterns)
+    public static function createImageData($imageFile)
     {
         $datafile = "";
         try {
@@ -32,62 +32,30 @@ class Ocr
     }
 
 
-    private static function checkMatches($text, $x1, $y1, $x2, $y2)
+    private static function checkMatches($text, $x1, $y1, $x2, $y2, $patterns = [])
     {
         $markedData = [];
 
-        // Define regex patterns for email, phone numbers, and domain names
-        $emailPattern = '/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/';
-        $phonePattern = '/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/m';
-        $domainPattern = '/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}/';
-
-        // Check if the text contains an email address
-        if (preg_match($emailPattern, $text, $emailMatch)) {
-            $markedData[] = [
-                'c' => [
-                    'x1' => $x1,
-                    'y1' => $y1,
-                    'x2' => $x2,
-                    'y2' => $y2,
-                ],
-                'text' => $emailMatch[0],
-                'type' => 'email'
-            ];
-        }
-
-        // Check if the text contains a phone number
-        if (preg_match($phonePattern, $text, $phoneMatch)) {
-            $markedData[] = [
-                'c' => [
-                    'x1' => $x1,
-                    'y1' => $y1,
-                    'x2' => $x2,
-                    'y2' => $y2,
-                ],
-                'text' => $phoneMatch[0],
-                'type' => 'phone'
-            ];
-        }
-
-        // Check if the text contains a domain name
-        if (preg_match($domainPattern, $text, $domainMatch)) {
-            $markedData[] = [
-                'c' => [
-                    'x1' => $x1,
-                    'y1' => $y1,
-                    'x2' => $x2,
-                    'y2' => $y2,
-                ],
-                'text' => $domainMatch[0], // Get the matched domain
-                'type' => 'domain'
-            ];
+        foreach ($patterns as  $k => $pattern) {
+            if (preg_match($pattern, $text, $Match)) {
+                $markedData[] = [
+                    'c' => [
+                        'x1' => $x1,
+                        'y1' => $y1,
+                        'x2' => $x2,
+                        'y2' => $y2,
+                    ],
+                    'text' => $Match[0],
+                    'type' => $k
+                ];
+            }
         }
 
         return $markedData;
     }
 
 
-    static function parseImgData($datafile)
+    static function parseImgData($datafile, $patterns = [])
     {
         $MarkedData = [];
         $hocrOutput = file_get_contents($datafile);
@@ -126,7 +94,7 @@ class Ocr
                 $innerHTML = $dom->saveHTML($node); // Inner HTML
                 $innerText = trim(preg_replace('/\s+/', ' ', $node->textContent)); // Inner Tex
 
-                $lineData = self::checkMatches($innerText, $x1, $y1, $x2, $y2);
+                $lineData = self::checkMatches($innerText, $x1, $y1, $x2, $y2, $patterns);
                 if (isset($lineData[0]) && strlen($lineData[0]['text']) != strlen($innerText)) {
                     $lineData = []; // Full Text of line not matched 
                 }
@@ -144,7 +112,7 @@ class Ocr
                         $y2 = $match[4]; // Bottom coordinate
                         $text = $match[5]; // Recognized text
 
-                        $Data = self::checkMatches($text, $x1, $y1, $x2, $y2);
+                        $Data = self::checkMatches($text, $x1, $y1, $x2, $y2, $patterns);
                         if (!empty($Data)) {
                             $MarkedData = array_merge($MarkedData, $Data);
                         }
