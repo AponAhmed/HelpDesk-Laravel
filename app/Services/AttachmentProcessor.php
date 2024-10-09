@@ -13,9 +13,9 @@ class AttachmentProcessor
 {
     //Patterns array 
     protected array $patterns = [
-        '/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', //email
-        '/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/m', //phone
-        '/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}/'
+        'email' => '/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', //email
+        'mobile' => '/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/m', //phone
+        'domain' => '/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}/'
     ];
     public function processFile($filePath)
     {
@@ -56,12 +56,22 @@ class AttachmentProcessor
         return response('File not found or unsupported directory', 404);  // 404 Not Found
     }
 
-
     function processPDF($filePath, $user)
     {
         $pdfPath = storage_path('app/public/' . $filePath);
+
+        // Create an instance of your PdfModifier and process the PDF
+        $modifier = new PdfModifier();
+        $file = $modifier->processPDF($pdfPath, $this->patterns);
+        if ($file) {
+            return response($file)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'inline; filename="' . basename($filePath) . '"');
+        }
+        //Set headers for PDF output
         return false;
     }
+
 
 
     /**
@@ -71,7 +81,7 @@ class AttachmentProcessor
     {
         $imagePath = storage_path('app/public/' . $filePath);
 
-        $data = Ocr::parseImgData(Ocr::createImageData($imagePath, $this->patterns));
+        $data = Ocr::parseImgData(Ocr::createImageData($imagePath), $this->patterns);
 
         if (count($data) > 0) {
             // OCR successful with maskable data, process the data
