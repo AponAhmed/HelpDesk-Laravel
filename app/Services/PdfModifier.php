@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Response;
 use Smalot\PdfParser\Parser as PdfParser;
+use Imagick;
 
 
 class PdfModifier
@@ -78,12 +79,12 @@ class PdfModifier
         }
 
         // Initialize Imagick
-        $imagick = new \Imagick();
+        $imagick = new Imagick();
         $imagick->setResolution(120, 120); // Set resolution for better image quality
         $imagick->readImage($filePath); // Load the PDF file into Imagick
 
         // Create a new Imagick object for the new PDF
-        $newPdf = new \Imagick();
+        $newPdf = new Imagick();
 
         // Process each page in the PDF
         foreach ($imagick as $index => $page) {
@@ -94,8 +95,21 @@ class PdfModifier
             $imageFile = $tempDir . '/output_page_' . $index . '.jpg';
             $page->writeImage($imageFile); // Save the current page as an image
 
+            //Masking the image
+            $data = Ocr::parseImgData(Ocr::createImageData($imageFile), $this->patterns);
+            $imgGd = ImageModifier::createImageFromPath($imageFile);
+            // Process each part and add blur rectangles
+            foreach ($data as $part) {
+                $imgGd = ImageModifier::addBlurryRedRectangleWithNoise($imgGd, $part['c']);
+            }
+
+            imagejpeg($imgGd, $imageFile); // Save the GD image as a JPEG
+            // Free up memory
+            imagedestroy($imgGd);
+
+
             // Read the saved image back into Imagick to add to the new PDF
-            $newPage = new \Imagick($imageFile);
+            $newPage = new Imagick($imageFile);
             $newPdf->addImage($newPage); // Add the image to the new PDF
 
             // Cleanup temporary image file
@@ -106,7 +120,7 @@ class PdfModifier
         $newPdf->setImageFormat('pdf');
 
         // Create a temporary output path for the new PDF
-        $outputFilePath = $tempDir . '/' . time() . '.pdf';
+        $outputFilePath = $tempDir . '/' . AttachmentProcessor::fileNameParse($filePath) . ".pdf";
         $newPdf->writeImages($outputFilePath, true); // Save the new PDF
 
         // Get the binary contents of the new PDF
