@@ -299,7 +299,7 @@ class MailList extends Model
     public function broadcast($action = "")
     {
         //Other pre delete action will here
-      
+
         try {
             broadcast(new MailArrived($this, $action));
         } catch (\Exception $e) {
