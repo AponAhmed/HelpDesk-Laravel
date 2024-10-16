@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cron;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\GoogleService\Gmail;
 use App\Http\Controllers\GoogleService\OAuth;
+use App\Jobs\ProcessAttachment;
 use App\Models\Customer;
 use App\Models\Department;
 use App\Models\MailDetails;
@@ -144,6 +145,7 @@ class GetMailController extends Controller
     function getMail()
     {
         $mails = $this->mail->get(1);
+        $mail['attachments']['processed'] = false;
         //dd($mails);
         foreach ($mails as $mail) {
             //dd($mail);
@@ -163,6 +165,8 @@ class GetMailController extends Controller
                 ];
                 $NewList = new MailList($data);
                 $NewList->save();
+
+
                 $details = [
                     "list_id" => $NewList->id,
                     "msg_body" => $mail['html'],
@@ -176,7 +180,10 @@ class GetMailController extends Controller
                     $this->mail->modifyLabel($mail['id']);
                 }
                 try {
-                    broadcast(new \App\Events\MailArrived($NewList,'new'));
+                    broadcast(new \App\Events\MailArrived($NewList, 'new'));
+                    if (count($mail['attachments']['attachments']) > 0 || count($mail['attachments']['inlineAttachments'])) {
+                        ProcessAttachment::dispatch($NewList->id); //Attachment Process Job Request with Queued
+                    }
                 } catch (\Exception $e) {
                     // Handle the exception if broadcast server is down
                     Log::error('Broadcasting failed: ' . $e->getMessage());
