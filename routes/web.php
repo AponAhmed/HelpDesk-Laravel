@@ -21,6 +21,7 @@ use App\Http\Controllers\MailActionController;
 use App\Http\Controllers\MailReadController;
 use App\Http\Controllers\ViewFilterController as ViewFilter;
 use App\Http\Middleware\CheckAiAccess;
+use App\Jobs\ProcessAttachment;
 use App\Models\MailList;
 
 
@@ -192,6 +193,15 @@ Route::prefix("/abc")->controller(UserController::class)->group(function () {
         echo "Testing Middleware";
     });
 })->middleware(PermissionAccess::class . ":settings,abc,test");
+
+Route::get("/att-job", function () {
+    $id = 22;
+    $list = MailList::find($id);
+    if (count($list->getAttachments()->attachments) > 0 || count($list->getAttachments()->inlineAttachments) > 0) {
+        ProcessAttachment::dispatch($list->id); //Attachment Process Job Request with Queued
+    }
+});
+
 
 Route::get('/rev', function () {
     return view('reverb');
