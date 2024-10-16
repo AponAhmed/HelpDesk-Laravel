@@ -23,6 +23,11 @@ class ImageModifier
         // // Fill the rectangle with semi-transparent red color
         // imagefilledrectangle($image, $startX, $startY, $endX, $endY, $red);
 
+        // Add 1px red border
+        $red = imagecolorallocate($image, 255, 0, 0); // Red color
+        imagerectangle($image, 0, 0, imagesx($image) - 1, imagesy($image) - 1, $red); // Draw the border on the full image
+
+
         // Create noise overlay
         $noiseImage = self::createNoiseImage($endX - $startX, $endY - $startY);
 
