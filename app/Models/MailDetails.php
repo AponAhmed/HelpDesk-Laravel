@@ -28,4 +28,35 @@ class MailDetails extends Model
     {
         return $this->belongsTo(MailList::class, "list_id");
     }
+
+    /**
+     * Update the entire attachment data.
+     */
+    public function updateAttachmentData(array $newAttachments): void
+    {
+        // Set the new attachments data
+        $this->attachments = json_encode($newAttachments);
+        $this->save();
+    }
+
+    /**
+     * Set processed state for inline attachments.
+     *
+     * @param bool $state
+     * @return void
+     */
+    public function setAttachmentProcessed(bool $state): void
+    {
+        // Decode existing inline attachments
+        $inlineData = json_decode($this->inlineAttachments, true) ?? [];
+
+        // Update the processed property for each inline attachment
+        foreach ($inlineData as &$attachment) {
+            $attachment['processed'] = $state;
+        }
+
+        // Encode back to JSON and save
+        $this->inlineAttachments = json_encode($inlineData);
+        $this->save();
+    }
 }
