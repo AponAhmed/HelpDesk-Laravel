@@ -56,6 +56,12 @@ class AttachmentProcessor
         return response('File not found or unsupported directory', 404);  // 404 Not Found
     }
 
+    public static function fileNameParse($path)
+    {
+        $parts = explode('-_-', basename($path));
+        return isset($parts[1]) ? $parts[1] : basename($path);
+    }
+
     function processPDF($filePath, $user)
     {
         $pdfPath = storage_path('app/public/' . $filePath);
@@ -71,6 +77,8 @@ class AttachmentProcessor
         //Set headers for PDF output
         return false;
     }
+
+
 
 
 
@@ -127,7 +135,7 @@ class AttachmentProcessor
             // Return the binary data as a response with the correct content type
             return response($imageBinary)
                 ->header('Content-Type', $mimeType)
-                ->header('Content-Disposition', 'inline; filename="' . basename($imagePath) . '"');
+                ->header('Content-Disposition', 'inline; filename="' . self::fileNameParse($filePath) . '"');
         }
     }
 
