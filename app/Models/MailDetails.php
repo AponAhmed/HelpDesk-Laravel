@@ -29,6 +29,11 @@ class MailDetails extends Model
         return $this->belongsTo(MailList::class, "list_id");
     }
 
+
+    public function getAttachmentData(): array
+    {
+        return json_decode($this->attachments, true) ?? [];
+    }
     /**
      * Update the entire attachment data.
      */
@@ -42,21 +47,14 @@ class MailDetails extends Model
     /**
      * Set processed state for inline attachments.
      *
-     * @param bool $state
+     * @param mixed $state (true/false/vulnerable)
      * @return void
      */
-    public function setAttachmentProcessed(bool $state): void
+    public function setAttachmentProcessed($state): void
     {
         // Decode existing inline attachments
-        $inlineData = json_decode($this->inlineAttachments, true) ?? [];
-
-        // Update the processed property for each inline attachment
-        foreach ($inlineData as &$attachment) {
-            $attachment['processed'] = $state;
-        }
-
-        // Encode back to JSON and save
-        $this->inlineAttachments = json_encode($inlineData);
-        $this->save();
+        $inlineData = $this->getAttachmentData();
+        $inlineData['processed'] = $state;
+        $this->updateAttachmentData($inlineData);
     }
 }

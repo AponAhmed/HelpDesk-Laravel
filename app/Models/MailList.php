@@ -197,7 +197,7 @@ class MailList extends Model
 
     public function getAttachments()
     {
-        return $this->MailDetails ? json_decode($this->MailDetails->attachments) : null;
+        return $this->MailDetails ? (object) $this->MailDetails->getAttachmentData() : null;
     }
 
     public function  getUserNameAttribute()

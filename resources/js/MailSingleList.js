@@ -218,12 +218,21 @@ class SingleItem {
 
         if (this.attachments) {//----
             //attachment signatures in mail lis
+            let processedCls = "not-processed";
+            if (this.item.attachments.hasOwnProperty('processed') && this.item.attachments.processed) {
+                if (this.item.attachments.processed === "vulnerable") {
+                    processedCls = "processed-vulnerable";
+                } else {
+                    processedCls = "processed-clean";
+                }
+            }
+
             singleController.append(new el('span').event('click', () => {
                 //console.log('Attachments PopUp willbe triggered');
                 let att = new Attachments({ attachments: this.attachments, inlineAttachments: this.inlineAttachments });
                 att.popup();
 
-            }).class('attachment-icon').attr('title', 'Has Attachments').element);
+            }).class('attachment-icon').class(processedCls).attr('title', 'Has Attachments').element);
         }
 
         singleController.append(

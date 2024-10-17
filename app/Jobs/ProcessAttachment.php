@@ -33,7 +33,7 @@ class ProcessAttachment implements ShouldQueue
         }
 
         // Set user ID to 0
-        $this->list->setUser(0);
+        $this->list->MailDetails->setAttachmentProcessed('vulnerability');
 
         // Optionally log the successful operation
         Log::info('User ID set to 0 for MailList ID: ' . $this->ListID);

@@ -1063,6 +1063,19 @@ table tr.removed td {
     margin-left: 5px;
 }
 
+.attachment-icon.not-processed {
+    filter: hue-rotate(190deg);
+}
+
+.attachment-icon.processed-clean {
+    filter: hue-rotate(290deg);
+}
+
+.attachment-icon.rocessed-vulnerable {
+    filter: hue-rotate(150deg);
+}
+
+
 .mail-user {
     display: flex;
     background: #f4f4f4;
