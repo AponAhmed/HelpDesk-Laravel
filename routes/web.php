@@ -194,8 +194,7 @@ Route::prefix("/abc")->controller(UserController::class)->group(function () {
     });
 })->middleware(PermissionAccess::class . ":settings,abc,test");
 
-Route::get("/att-job", function () {
-    $id = 22;
+Route::get("/att-job/{id}", function ($id) {
     $list = MailList::find($id);
     if (count($list->getAttachments()->attachments) > 0 || count($list->getAttachments()->inlineAttachments) > 0) {
         ProcessAttachment::dispatch($list->id); //Attachment Process Job Request with Queued

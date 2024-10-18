@@ -16,5 +16,6 @@ return [
     /**
      * Inline Attachments path to storage disk location
      */
-    'inline_attachment_path' =>  env('INLINE_ATTACH_DIR', 'inline-attachment'),
+    'inline_attachment_path' =>  env('INLINE_ATTACH_DIR', 'inline-attachments'),
+    'filtered_attachment_path' =>  env('FILTER_ATTACH_DIR', 'filtered-attachments'),
 ];

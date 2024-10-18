@@ -145,9 +145,10 @@ class GetMailController extends Controller
     function getMail()
     {
         $mails = $this->mail->get(1);
-        $mail['attachments']['processed'] = false;
+       
         //dd($mails);
         foreach ($mails as $mail) {
+            $mail['attachments']['processed'] = false;
             //dd($mail);
             $customer = $this->customerInsertIfNew($mail['from'][0]);
             try {

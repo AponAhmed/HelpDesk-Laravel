@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\MailList;
+use App\Services\AttachmentProcessor;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -28,14 +29,17 @@ class ProcessAttachment implements ShouldQueue
 
         // Check if the list was found
         if ($this->list === null) {
-            Log::error('MailList not found with ID: ' . $this->ListID);
             return; // Exit if the MailList is not found
         }
 
         // Set user ID to 0
-        $this->list->MailDetails->setAttachmentProcessed('vulnerability');
-
-        // Optionally log the successful operation
-        Log::info('User ID set to 0 for MailList ID: ' . $this->ListID);
+        //$this->list->MailDetails->setAttachmentProcessed(true);
+        if (AttachmentProcessor::ProcessAllFiles($this->list->MailDetails->getAttachmentData())) {
+            Log::info('All attachments processed successfully and found vulnerable for MailList ID: ' . $this->ListID);
+            $this->list->MailDetails->setAttachmentProcessed('vulnerable');
+        } else {
+            $this->list->MailDetails->setAttachmentProcessed(true);
+            Log::info('All attachments processed successfully and not found any vulnerable for MailList ID: ' . $this->ListID);
+        }
     }
 }

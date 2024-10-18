@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\File;
 
 class AttachmentProcessServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,12 @@ class AttachmentProcessServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Get the configured attachment directory path
+        $attachmentDirectory = storage_path('app/public/' . config('attachment.filtered_attachment_path'));
+
+        // Check if the directory exists, and create it if it doesn't
+        if (!File::exists($attachmentDirectory)) {
+            File::makeDirectory($attachmentDirectory, 0755, true, true);
+        }
     }
 }
